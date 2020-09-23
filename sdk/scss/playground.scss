@@ -1,0 +1,80 @@
+// Foundation Core
+@import "./modules.scss";
+
+// Utility
+@import "./utility.scss";
+
+section.content{
+  max-width: 1024px;
+  padding: 50px;
+}
+
+section, header, footer{
+  display: grid;
+  justify-items: center;
+  padding: 20px;
+
+  div.row{
+    max-width: rem-calc(1200);
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+section.widgets{
+  display: block;
+  padding: 0;
+  border-top: 2px dashed #eee;
+  border-bottom: 2px dashed #eee;
+}
+
+footer{
+  padding: 30px 20px;
+  p{
+    a{
+      display: inline-block;
+      padding: 15px 20px;
+      background-color: #f60;
+      border-radius: 3px;
+      color: white;
+      transition: all .3s;
+
+      &:hover{
+        background-color: lighten($color: #f60, $amount: 5%);
+        color: white;
+      }
+    }
+  }
+}
+
+
+h1{
+  color: black;
+  margin-top: 3rem;
+}
+
+h2, h3{
+  font-size: 1.25rem;
+  color: #444;
+}
+
+header {
+  h1 {
+    margin-bottom: 0;
+  }
+}
+
+.demo {
+  display: block;
+  padding: 0;
+  width: 100%;
+  & h3 {
+    text-align: left;
+    padding-left: 20px;
+  }
+  .playground {
+    display: block;
+    position: relative;
+    min-height: 100vh;
+  }
+}

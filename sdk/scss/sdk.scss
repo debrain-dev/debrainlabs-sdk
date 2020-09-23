@@ -1,0 +1,45 @@
+@import "./fonts.scss";
+@import "./icons.scss";
+
+$font-lato: 'Lato-Regular';
+$font-lato-light: 'Lato-Light';
+$font-lato-bold: 'Lato-Bold';
+$font-meister: 'Meister-Bold';
+$body-font-family: $font-lato;
+
+$color-white: #e7e1c9;
+$color-orange: #e55f09;
+$color-green: #1b441b;
+$color-green-light: #77a74d;
+$color-skin: #fead75;
+$color-grey: #b0aa92;
+$color-brown: #927f50;
+
+// Foundation Core
+@import "./modules.scss";
+
+// normalize
+@import "./normalize.scss";
+
+.sdk-main {
+
+  & > * {
+    outline: none;
+  }
+
+  // Utility
+  @import "./utility.scss";
+
+  // Components
+  @import "./components/_index";
+
+  // Pages
+  @import "./pages/_index";
+
+}
+
+.sdk-loaded {
+  opacity: 1 !important;
+  transition: all 2s ease-in;
+  min-height: 100vh;
+}

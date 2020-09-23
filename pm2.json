@@ -1,0 +1,31 @@
+{
+  "name": "your-app-name",
+  "script": "app.js",
+  "max_memory_restart": "700M",
+  "instances": "max",
+  "log_date_format": "YYYY-MM-DD HH:mm:ss Z",
+  "env": {
+    "PORT": "7600",
+    "NODE_ENV": "development"
+  },
+  "env_production": {
+    "PORT": "7600",
+    "NODE_ENV": "production"
+  },
+  "deploy": {
+    "production": {
+      "user": "server",
+      "port": "22",
+      "host": ["your-ip-address"],
+      "ref": "origin/production",
+      "repo": "git@bitbucket.org:debraindev-barsmarts/your-repo.git",
+      "path": "/home/server/project-name/your-app-name",
+      "pre-setup": "echo 'commands or local script path to be run on the host before the setup process starts'",
+      "post-deploy": "npm install && pm2 startOrRestart pm2.json --env production --only your-app-name && pm2 save",
+      "env": {
+        "PORT": "7600",
+        "NODE_ENV": "production"
+      }
+    }
+  }
+}

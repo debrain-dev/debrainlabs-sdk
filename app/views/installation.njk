@@ -1,0 +1,86 @@
+{% extends "_shared/templates/website.njk" %}
+
+{% block content %}
+
+<header>
+  <div class="row">
+    <div class="small-12 columns">
+      <img src="https://static.wixstatic.com/media/f19934_1889e6989af44cd499232815ec97c554~mv2.png/v1/fill/w_27,h_32,al_c,q_80,usm_0.66_1.00_0.01/f19934_1889e6989af44cd499232815ec97c554~mv2.webp" alt="DEBRAIN" />
+      <h1>DËBRAIN - Demo</h1>
+      <h2>Implementation Guide</h2>
+    </div>
+  </div>
+</header>
+
+<section class="docs">
+  <div class="row">
+    <div class="columns">
+      <h3>Setup your SDK</h3>
+      <p>
+        Include the following JS script to populate the demo functionality:
+      </p>
+
+      <pre>
+        <code class="javascript" style="font-size: 80%">
+&lt;script&gt;
+  window.onSDKLoad = function() {
+    SDK.demo({
+      el: '.your-container'
+    });
+  };
+&lt;/script&gt;
+        </code>
+      </pre>
+
+      <ul>
+        <li>Note: You can use a different container name besides 'your-container'. Make sure the class of the HTML tag and the element in the initialization match.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="docs">
+  <div class="row">
+    <div class="columns">
+      <h3>Javascript SDK</h3>
+      <p>
+        Include the following Javascript SDK ilbrary. Make sure you reference the js file from the DËBRAIN servers and add the correct UUID value into the "data-id" attribute. Do not include a local copy of the js as the code might get updated.
+      </p>
+
+      <pre>
+        <code class="javascript" style="font-size: 80%">
+
+&lt;script src="https://demo.debrain.cloud/js/sdk.js"&gt;&lt;/script&gt;
+
+&lt;!-- or --&gt;
+
+&lt;script type="text/javascript"&gt;
+  (function onLoadSDK(d, s, id) {
+    const fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    const js = d.createElement(s);
+    js.id = id;
+    js.src = 'https://demo.debrain.cloud/js/sdk.js;
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'demo-sdk'));
+&lt;/script&gt;
+
+        </code>
+      </pre>
+
+    </div>
+  </div>
+</section>
+
+<section class="docs">
+  <div class="row">
+    <div class="columns">
+      <h3>Support</h3>
+      <p>
+        For any support inquiries, please contact us at seth@hellodebrain.com.
+      </p>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

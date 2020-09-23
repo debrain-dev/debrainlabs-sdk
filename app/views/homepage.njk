@@ -1,0 +1,152 @@
+{% extends "_shared/templates/website.njk" %}
+
+{% block content %}
+<!--
+<header>
+  <div class="row">
+    <div class="small-12 columns">
+      <img src="https://static.wixstatic.com/media/f19934_1889e6989af44cd499232815ec97c554~mv2.png/v1/fill/w_27,h_32,al_c,q_80,usm_0.66_1.00_0.01/f19934_1889e6989af44cd499232815ec97c554~mv2.webp" alt="DEBRAIN" />
+      <h1>Jägermeister - ChatBot</h1>
+      <h2>Implementation Guide</h2>
+    </div>
+  </div>
+</header>
+-->
+<section class="demo">
+  <div class="playground"></div>
+</section>
+
+<!--
+<section class="docs">
+  <div class="row">
+    <div class="columns">
+
+      <h3>Dialogflow</h3>
+      <p>
+        Dialogflow messenger customization settings are explained here:
+        <a href="https://cloud.google.com/dialogflow/docs/integrations/dialogflow-messenger?hl=es-419">Docs</a>
+      </p>
+
+    </div>
+    <div class="columns">
+
+      <h3>Javascript SDK</h3>
+      <p>
+        Include the following Javascript SDK ilbrary. Make sure you reference the js file from the DËBRAIN servers. Do not include a local copy of the js as the code might get updated.
+      </p>
+
+    </div>
+  </div>
+</section>
+-->
+
+<!--
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="jagermeister-test"
+  agent-id="a8393b73-23ac-4943-bbce-aa14a1172a2e"
+  language-code="en"
+></df-messenger>
+-->
+
+<!--
+
+<section class="docs">
+  <div class="row">
+    <div class="columns">
+
+      <h3>Javascript SDK</h3>
+      <p>
+        Include the following Javascript SDK ilbrary. Make sure you reference the js file from the DËBRAIN servers and add the correct UUID value into the "data-id" attribute. Do not include a local copy of the js as the code might get updated.
+      </p>
+      <script src="https://gist.github.com/argordmel/3b3910a5ad5262c5842b5933d2902bcb.js"></script>
+
+      <h3>Button Trigger</h3>
+      <p>
+        To show the Call Us form, you can open it programmatically:
+      </p>
+      <script src="https://gist.github.com/argordmel/fe6af1666012dd91160551d3c6542c36.js"></script>
+
+      <h3>Example</h3>
+      <p>
+        <a href="#" id="demo-trigger">Call Us Trigger</a>
+      </p>
+
+    </div>
+  </div>
+</section>
+
+<div>
+  <section class="docs">
+    <div class="row">
+      <div class="columns">
+        <h3>Javascript SDK</h3>
+        <p>
+          Include the following Javascript SDK library. Make sure you reference the js file from the DËBRAIN servers. Do not include a local copy of the js as the code might get updated.
+        </p>
+        <script src="https://gist.github.com/argordmel/98e4359fdcb8f6490e5bfd8458ad41e6.js"></script>
+
+        <h3>HTML Markup</h3>
+        <p>
+          Add the following HTML in the containing page wherever you want the eCard functionality to be populated:
+        </p>
+        <script src="https://gist.github.com/josedaniel/8ef02ce597b30d32eb1fe475e55f9d5b.js"></script>
+        <p>
+          When implementing this markup, please make sure that the element that contains the e-card container follows these rules:
+        </p>
+        <ul>
+          <li>
+            Make sure the display CSS property is not set to <code>display: grid;</code>. This is known to brake the slider Implementation for mobile devices.
+          </li>
+          <li>
+            Make sure the position CSS property is not set to <code>position: absolute;</code> or <code>position: relative;</code>. This is known to break the ligthbox implementation.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class="docs">
+    <div class="row">
+      <div class="columns">
+        <h3>Initialize the eCards</h3>
+        <p>
+          Include the following JS script to populate the eCard functionality:
+        </p>
+        <script src="https://gist.github.com/josedaniel/416e70316b94639ccc92ed4a85d3cb99.js"></script>
+        <ul>
+          <li>Note: You can use a different container name besides 'ecards-container'. Make sure the class of the HTML tag and the e1 element in the initialization match.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class="docs">
+    <div class="row">
+      <div class="columns">
+        <h3>Support</h3>
+        <p>
+          For any support inquiries, please contact us at seth@hellodebrain.com.
+        </p>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <div class="row">
+      <div class="small-1 columns">
+
+      </div>
+    </div>
+  </footer>
+</div>
+
+-->
+
+<script type="text/javascript">
+  window.onSDKLoad = function() {
+    SDK.demo({
+      el: '.playground'
+    });
+  };
+</script>
+
+{% endblock %}
