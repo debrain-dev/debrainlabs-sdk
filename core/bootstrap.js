@@ -36,8 +36,7 @@ const environmentConfig = config.env ? config.env[env] || {} : {};
 const allConfig = merge.all([config, environmentConfig, localConfig]);
 
 const {
-  settings,
-  views
+  settings
 } = allConfig;
 
 delete config.env;
@@ -46,9 +45,7 @@ delete config.local;
 settings.host = (process.env.HOST || settings.host || '').replace(/(^\w+:|^)\/\//, '');
 
 // General Settings
-app.config = Object.assign({}, config, { settings, views: views.config });
-
-console.log(app.config.views);
+app.config = Object.assign({}, config, { settings });
 
 // Override custom config with the localfile
 Object.keys(settings).forEach((key) => {
