@@ -33,7 +33,10 @@ window.SDK = {
 
   version,
 
+  // @TODO: change for your component name
   demo(props) {
+
+    // @TODO: change for your component name
     components.demo.init(props);
   }
 

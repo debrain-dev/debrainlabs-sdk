@@ -4,6 +4,8 @@ import { shim } from 'promise.prototype.finally';
 // Enable finally promisse into axios ...finally( () => { })
 shim();
 
+// @TODO: change for your custom url
+//
 // Add the base url to axios
 let domainBase = 'https://your-sdk.debrain.cloud/api';
 

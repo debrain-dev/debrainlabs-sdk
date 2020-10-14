@@ -41,13 +41,16 @@ const demo = {
 
   render() {
 
-    // Append html
+    // Container
     const $container = $SDK(this.el);
 
+    // keep the component hidden but visible
     $container.empty().css('opacity', '0').css('visibility', 'visible');
 
+    // append html
     $container.append(this.view);
 
+    // show component
     $container.addClass('sdk-loaded').fadeIn(500, () => {
       console.log('SDK loaded');
     });
@@ -56,4 +59,5 @@ const demo = {
 
 };
 
+// @TODO: change for your component name
 export default demo;
