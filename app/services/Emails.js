@@ -9,7 +9,7 @@ module.exports = {
         'content-type': 'application/json'
       },
       method: 'POST',
-      uri: 'https://jagermeisteroccasions.debrain.cloud/api/contacts/add',
+      uri: 'https://your-domain.debrain.cloud/api/contacts/add', // @TODO: change for your proyect
       body: payload,
       json: true // Automatically stringifies the body to JSON
     };

@@ -17,8 +17,11 @@ if (typeof window.ga !== 'function') {
 }
 
 setTimeout( () => {
-  window.ga('create', 'UA-177551352-1', 'auto', 'SDK');
-  window.ga('SDK.send', 'pageview');
+
+  // @TODO: add your GA code here
+  // window.ga('create', 'XXXXXXX', 'auto', 'SDK');
+  // window.ga('SDK.send', 'pageview');
+
 }, 100);
 
 function tracking(props) {
@@ -47,7 +50,7 @@ function tracking(props) {
         eventLabel: value
       });
     } catch (e) {
-      console.log('Jägermeister ChatBot: GA is not available.');
+      console.log('SDK: GA is not available.');
     }
   }
 
@@ -68,9 +71,9 @@ function tracking(props) {
       method: 'POST',
       url: 'https://tracking.debrain.cloud/track.php',
       data: {
-        project_name: 'JaggermeisterChatBot',
+        project_name: 'YourProjectSDK', // @TODO: change for your project name
         event_name: `${event}-${value}`,
-        project_variant: 'JAGCB',
+        project_variant: 'GSDK', // @TODO: change for your project (abbr)
         params_object: JSON.stringify(merged),
         action_label: JSON.stringify(value)
       }

@@ -5,22 +5,27 @@ import { shim } from 'promise.prototype.finally';
 shim();
 
 // Add the base url to axios
-let domainBase = 'https://jagermeisterhotline.debrain.cloud/api';
+let domainBase = 'https://your-sdk.debrain.cloud/api';
 
 const currentDomain = window.location.href;
 
 if ( currentDomain.indexOf( 'localhost' ) !== -1 ) {
   // Local Environment
   domainBase = `${window.location.protocol}//${window.location.host}/api`;
-} else if ( currentDomain.indexOf( '192.168' ) !== -1 ) {
+
+} else if ( currentDomain.indexOf( '192.168' ) !== -1 || currentDomain.indexOf( '127.0.0.1' ) !== -1 ) {
+
   // Local Environment
   domainBase = `${window.location.protocol}//${window.location.host}/api`;
+
 } else if ( currentDomain.indexOf( 'herokuapp' ) !== -1 ) {
-  // Staging Environment
-  domainBase = 'https://debrain-jagermeister-chatbot.herokuapp.com/api';
-} else if ( currentDomain.indexOf( 'hellodebrain.com' ) !== -1 ) {
-  // Debrain Environment
-  domainBase = 'https://jagermeister-bot.hellodebrain.com/api';
+
+  // @TODO: Heroku Environment
+
+} else if ( currentDomain.indexOf( 'staging' ) !== -1 ) {
+
+  // @TODO: Staging Environment
+
 }
 
 axios.defaults.baseURL = domainBase;

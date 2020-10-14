@@ -19,7 +19,7 @@ const moment = require('moment');
 module.exports = {
 
   // Hostname
-  host: 'jagermeisterhotline.debrain.cloud',
+  host: 'sdk.debrain.cloud', // @TODO: change for your domain
 
   // Port
   port: 5000,

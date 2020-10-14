@@ -49,17 +49,19 @@ const currentDomain = window.location.href;
 if ( currentDomain.indexOf( 'localhost' ) !== -1 ) {
   // Local Environment
   $SDK('head').append(`<link id="sdk-style" rel="stylesheet" href="/css/sdk.css?v=${version}">`);
-} else if ( currentDomain.indexOf( '192.168' ) !== -1 ) {
+
+} else if ( currentDomain.indexOf( '192.168' ) !== -1 || currentDomain.indexOf( '127.0.0.1' ) !== -1 ) {
   // Local Environment
   $SDK('head').append(`<link id="sdk-style" rel="stylesheet" href="/css/sdk.css?v=${version}">`);
+
 } else if ( currentDomain.indexOf( 'herokuapp' ) !== -1 ) {
-  // Staging Environment
-  $SDK('head').append(`<link id="sdk-style" rel="stylesheet" href="https://debrain-jagermeister-chatbot.herokuapp.com/css/sdk.css?v=${version}">`);
-} else if ( currentDomain.indexOf( 'hellodebrain.com' ) !== -1 ) {
-  // Debrain Environment
-  $SDK('head').append(`<link id="sdk-style" rel="stylesheet" href="https://jagermeister-bot.hellodebrain.com/css/sdk.css?v=${version}">`);
+  // Heroku Environment
+
+} else if ( currentDomain.indexOf( 'staging' ) !== -1 ) {
+  // @TODO: Staging Environment
+
 } else {
-  $SDK('head').append(`<link id="sdk-style" rel="stylesheet" href="https://jagermeisterhotline.debrain.cloud/css/sdk.css?v=${version}">`);
+  // @TODO: Production
 }
 
 tracking( { category: 'page', event: 'load', value: 'page' } );
@@ -72,7 +74,7 @@ tracking( { category: 'page', event: 'load', value: 'page' } );
   }
   const js = d.createElement(s);
   js.id = id;
-  js.src = '//jagermeisterhotline.debrain.cloud/js/sdk.js?v=1.0.0';
+  js.src = '//your-sdk.debrain.cloud/js/sdk.js?v=1.0.0';
   fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'chatbot-jssdk'));
+}(document, 'script', 'debrain-jssdk'));
 */

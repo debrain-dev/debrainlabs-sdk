@@ -1,4 +1,4 @@
-/* global app, __dirname */
+/* global app, __dirname, process, global */
 
 /**
  * Bootstrap.js
@@ -11,6 +11,7 @@ global._ = require('underscore');
 
 const path = require('path');
 const moment = require('moment');
+const merge = require('deepmerge');
 
 global.Promise = require('bluebird');
 
@@ -25,8 +26,19 @@ const config = require('include-all')({
 app.PRODUCTION = (process.env.NODE_ENV || '').toLowerCase() === 'production';
 const env = (process.env.NODE_ENV || 'development').toLowerCase();
 
-const envSettings = Object.assign(config.env ? config.env[env] || {} : {}, config.local || {});
-const settings = Object.assign(config.settings, envSettings);
+// Local Config
+const localConfig = config.local || {};
+
+// NODE_ENV
+const environmentConfig = config.env ? config.env[env] || {} : {};
+
+// All config merged (default, NODE_ENV, local.js file)
+const allConfig = merge.all([config, environmentConfig, localConfig]);
+
+const {
+  settings,
+  views
+} = allConfig;
 
 delete config.env;
 delete config.local;
@@ -34,7 +46,9 @@ delete config.local;
 settings.host = (process.env.HOST || settings.host || '').replace(/(^\w+:|^)\/\//, '');
 
 // General Settings
-app.config = Object.assign({}, config, { settings });
+app.config = Object.assign({}, config, { settings, views: views.config });
+
+console.log(app.config.views);
 
 // Override custom config with the localfile
 Object.keys(settings).forEach((key) => {

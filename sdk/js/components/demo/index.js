@@ -48,7 +48,7 @@ const demo = {
 
     $container.append(this.view);
 
-    $container.addClass('sdk-loaded').fadeIn(750, () => {
+    $container.addClass('sdk-loaded').fadeIn(500, () => {
       console.log('SDK loaded');
     });
 

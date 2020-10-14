@@ -4,11 +4,7 @@
  */
 module.exports = {
 
-  ivanmel: 'mongodb://localhost/debrain_jagermeister',
-
-  sjunca: 'mongodb://localhost/debrain_jagermeister',
-
-  jose: 'mongodb://localhost/debrain_jagermeister',
+  ivanmel: 'mongodb://localhost/debrain_sdk',
 
   development: 'mongodb://server/database',
 

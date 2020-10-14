@@ -10,7 +10,6 @@
   "scripts": {
     "dev": "node ./node_modules/concurrently/bin/concurrently './node_modules/nodemon/bin/nodemon.js --inspect' 'npm run webpack' 'npm run gulp'",
     "start": "node app.js",
-    "pm2": "./node_modules/pm2/bin/pm2 start pm2.json",
     "test": "npm run test:integration",
     "test:integration": "./node_modules/.bin/mocha './test/integration/setup.js' './test/integration/**/*-test.js'",
     "postinstall": "npm run build",
@@ -19,9 +18,7 @@
     "build": "NODE_ENV=production webpack --config webpack.app.js && NODE_ENV=production gulp --gulpfile gulpfile.app.js",
     "push": "git pull && git push",
     "deploy:heroku": "npm run push && git push heroku master",
-    "deploy:server": "pm2 deploy pm2.json production",
-    "tunnel:jd": "ngrok http -subdomain=jose-debrain-jagermeister-bot 5000",
-    "tunnel:jp": "ngrok http -subdomain=juan-debrain-jagermeister-bot 5000"
+    "deploy:server": "pm2 deploy pm2.json production"
   },
   "dependencies": {
     "@kuscamara/code-sample": "^3.0.2",
@@ -41,6 +38,7 @@
     "cron": "^1.7.2",
     "crossroads": "^0.12.2",
     "date-fns": "^2.16.1",
+    "deepmerge": "^4.2.2",
     "ejs": "^3.0.1",
     "exceljs": "^3.5.0",
     "express": "^4.17.1",
