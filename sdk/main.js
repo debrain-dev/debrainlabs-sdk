@@ -1,13 +1,15 @@
 import 'idempotent-babel-polyfill';
 
 import $SDK from 'jquery';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 import tracking from './libs/tracking';
 import url from './libs/url';
 import components from './components/index';
 
 window.$SDK = $SDK;
+
+// slick.init();
 
 const currentSession = window.sessionStorage.getItem('sdk-session-id');
 if (!currentSession) {
@@ -33,11 +35,8 @@ window.SDK = {
 
   version,
 
-  // @TODO: change for your component name
-  demo(props) {
-
-    // @TODO: change for your component name
-    components.demo.init(props);
+  render(props) {
+    components.render.init(props);
   }
 
 };
@@ -47,37 +46,4 @@ if (typeof window.onSDKLoad === 'function') {
   window.onSDKLoad();
 }
 
-const currentDomain = window.location.href;
-
-if ( currentDomain.indexOf( 'localhost' ) !== -1 ) {
-  // Local Environment
-  $SDK('head').append(`<link id="sdk-style" rel="stylesheet" href="/css/sdk.css?v=${version}">`);
-
-} else if ( currentDomain.indexOf( '192.168' ) !== -1 || currentDomain.indexOf( '127.0.0.1' ) !== -1 ) {
-  // Local Environment
-  $SDK('head').append(`<link id="sdk-style" rel="stylesheet" href="/css/sdk.css?v=${version}">`);
-
-} else if ( currentDomain.indexOf( 'herokuapp' ) !== -1 ) {
-  // Heroku Environment
-
-} else if ( currentDomain.indexOf( 'staging' ) !== -1 ) {
-  // @TODO: Staging Environment
-
-} else {
-  // @TODO: Production
-}
-
 tracking( { category: 'page', event: 'load', value: 'page' } );
-
-/*
-(function onLoadSDK(d, s, id) {
-  const fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {
-    return;
-  }
-  const js = d.createElement(s);
-  js.id = id;
-  js.src = '//your-sdk.debrain.cloud/js/sdk.js?v=1.0.0';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'debrain-jssdk'));
-*/

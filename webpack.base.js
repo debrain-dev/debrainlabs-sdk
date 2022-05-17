@@ -1,7 +1,3 @@
-/* global __dirname */
-
-const path = require('path');
-
 // Babel Loader
 const useBabelLoader = {
   test: /\.js$/,
@@ -21,22 +17,6 @@ const useBabelLoader = {
   }
 };
 
-// ESLint Loader
-const useESLintLoader = {
-  test: /\.js$/,
-  enforce: 'pre',
-  exclude: /(node_modules)/,
-  use: {
-    loader: 'eslint-loader',
-    options: {
-      configFile: path.resolve(__dirname, './.eslintrc'),
-      ignore: path.resolve(__dirname, './.eslintignore'),
-      failOnWarning: false,
-      failOnError: false
-    }
-  }
-};
-
 // Underscore Loader
 const useUnderscoreLoader = {
   test: /\.html$/,
@@ -52,20 +32,29 @@ const useUnderscoreLoader = {
   }
 };
 
+// Vue Loader
+const useVueLoader = {
+  test: /\.vue$/,
+  use: {
+    loader: 'vue-loader'
+  }
+};
+
 module.exports = {
 
   mode: String(process.env.NODE_ENV || 'development').toLowerCase(),
 
   stats: {
     colors: true,
-    env: true
+    env: true,
+    errorDetails: true
   },
 
   module: {
 
     rules: [
       useBabelLoader,
-      useESLintLoader,
+      useVueLoader,
       useUnderscoreLoader
     ]
 

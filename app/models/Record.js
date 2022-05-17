@@ -69,26 +69,20 @@ module.exports = {
    */
   getRecord(id) {
 
-    return Promise
-      .resolve()
-      .then( () => {
+    // This is to prevent error while run the findOne
+    if (!(/^[a-fA-F0-9]{24}$/).test(id)) {
+      return VSError.reject('Invalid ID. Record not found', 404);
+    }
 
-        // This is to prevent error while run the findOne
-        if (!(/^[a-fA-F0-9]{24}$/).test(id)) {
-          return VSError.reject('Invalid ID. Record not found', 404);
+    return Record
+      .findOne({ _id: id })
+      .then( (record) => {
+
+        if (!record || (record && !record._id)) {
+          return VSError.reject('Record not found', 404);
         }
 
-        return Record
-          .findOne({ _id: id })
-          .then( (record) => {
-
-            if (!record || (record && !record._id)) {
-              return VSError.reject('Record not found', 404);
-            }
-
-            return record;
-
-          });
+        return record;
 
       });
 

@@ -29,6 +29,7 @@ Thumbs.db
 *.dev
 .DS_Store
 *.lock
+*.identifier
 
 # Editor folders #
 ########################
@@ -53,9 +54,7 @@ dwsync.xml
 #Dockerfile
 #docker-compose.yml
 
-
-# Project #
-########################
+# Project
 
 # Styles
 public/css/sdk.css

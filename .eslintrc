@@ -1,16 +1,34 @@
 {
-  "parser": "babel-eslint",
+  "root": true,
+  "parser": "@babel/eslint-parser",
   "extends": "airbnb",
   "parserOptions": {
-    "ecmaVersion": 6,
+    "requireConfigFile": false,
+    "ecmaVersion": 8,
     "sourceType": "module"
   },
   "env": {
-      "node": true,
-      "browser": true,
-      "es6": true,
-      "jquery": true,
-      "mocha": true
+    "node": true,
+    "browser": true,
+    "es6": true,
+    "jquery": true,
+    "mocha": true
+  },
+  "globals": {
+    "app": true,
+    "io": true,
+    "Promise": true,
+    "VSError": true,
+    "Filter": true,
+    "ABS_PATH": true,
+    "APP_PATH": true,
+    "CORE_PATH": true,
+    "PUBLIC_PATH": true
+  },
+  "settings": {
+    "react": {
+      "version": "999.999.999"
+    }
   },
   "rules": {
     "arrow-body-style": [0],

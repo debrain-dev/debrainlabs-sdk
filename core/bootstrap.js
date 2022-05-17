@@ -1,58 +1,67 @@
-/* global app, __dirname, process, global */
-
 /**
  * Bootstrap.js
  *
  */
 
-global.app = {};
-
-global._ = require('underscore');
-
 const path = require('path');
 const moment = require('moment');
 const merge = require('deepmerge');
+const _ = require('underscore');
+const Promise = require('bluebird');
 
-global.Promise = require('bluebird');
+global.app = {};
+global._ = _;
+global.Promise = Promise;
+
+global.ABS_PATH = path.resolve(__dirname, '../');
+global.CORE_PATH = path.join(__dirname, '../core');
+global.APP_PATH = path.join(__dirname, '../app');
+global.PUBLIC_PATH = path.join(__dirname, '../public');
 
 // Include all api config
 const config = require('include-all')({
-  dirname: path.normalize(path.join(__dirname, '../app/config')),
+  dirname: `${APP_PATH}/config`,
   filter: /(.+)\.js$/,
   optional: true
 });
 
+// Get package.json information
+const pkg = require('../package.json');
+
 // Environment
 app.PRODUCTION = (process.env.NODE_ENV || '').toLowerCase() === 'production';
 const env = (process.env.NODE_ENV || 'development').toLowerCase();
+
+const {
+  views
+} = config;
 
 // Local Config
 const localConfig = config.local || {};
 
 // NODE_ENV
 const environmentConfig = config.env ? config.env[env] || {} : {};
+const settings = {
+  ...config.settings,
+  views: views.config
+};
 
-// All config merged (default, NODE_ENV, local.js file)
-const allConfig = merge.all([config, environmentConfig, localConfig]);
+// All config merged (default, NODE_ENV (folder env), local.js file)
+const allConfig = merge.all([
+  config,
+  { settings },
+  environmentConfig,
+  localConfig
+]);
 
-const {
-  settings
-} = allConfig;
-
-delete config.env;
-delete config.local;
-
-settings.host = (process.env.HOST || settings.host || '').replace(/(^\w+:|^)\/\//, '');
+delete allConfig.env;
+delete allConfig.local;
 
 // General Settings
-app.config = Object.assign({}, config, { settings });
+app.config = allConfig;
 
-// Override custom config with the localfile
-Object.keys(settings).forEach((key) => {
-  if (app.config[key] !== undefined) {
-    app.config[key] = Object.assign({}, config[key], settings[key]);
-  }
-});
+// Package Config
+app.pkg = pkg;
 
 // Include all components
 require('./services')();
@@ -60,45 +69,116 @@ require('./database')();
 const controllers = require('./controllers')();
 const server = require('./server');
 
+const colors = {
+  reset: '\x1b[0m',
+  bright: '\x1b[1m',
+  dim: '\x1b[2m',
+  underscore: '\x1b[4m',
+  blink: '\x1b[5m',
+  reverse: '\x1b[7m',
+  hidden: '\x1b[8m',
+  fg: {
+    black: '\x1b[30m',
+    red: '\x1b[31m',
+    green: '\x1b[32m',
+    yellow: '\x1b[33m',
+    blue: '\x1b[34m',
+    magenta: '\x1b[35m',
+    cyan: '\x1b[36m',
+    white: '\x1b[37m',
+    crimson: '\x1b[38m' // Scarlet
+  },
+  bg: {
+    black: '\x1b[40m',
+    red: '\x1b[41m',
+    green: '\x1b[42m',
+    yellow: '\x1b[43m',
+    blue: '\x1b[44m',
+    magenta: '\x1b[45m',
+    cyan: '\x1b[46m',
+    white: '\x1b[47m',
+    crimson: '\x1b[48m'
+  }
+};
+
 module.exports = function loadBootstrapApplication() {
 
   console.log('');
   console.log('');
-  console.log('------------------------------');
+  console.log(`${colors.fg.magenta}--------------------------------------`, colors.reset);
   console.log('');
-  console.log('          VULKANO');
+  console.log(colors.fg.cyan, '               🌋', colors.reset);
+  console.log(colors.fg.cyan, `         VULKANO ${pkg.version}`, colors.reset);
   console.log('');
-  console.log('------------------------------');
+  console.log(colors.fg.blue, 'https://github.com/vulkanojs/vulkano', colors.reset);
+  console.log(colors.fg.cyan, '☕ https://buymeacoffee.com/argordmel', colors.reset);
+  console.log('');
+  console.log(`${colors.fg.magenta}--------------------------------------`, colors.reset);
 
   // Routes
   app.routes = controllers;
 
   // Server Config
-  app.server = Object.assign({}, server, app.config.settings || {});
+  app.server = {
+    ...server,
+    ...app.config.settings
+  };
 
   // Server Routes
-  app.server.routes = Object.assign({}, app.config.routes || {});
+  app.server.routes = {
+    ...app.config.routes
+  };
 
-  if (config.bootstrap && typeof config.bootstrap === 'function') {
-    config.bootstrap(() => {
+  const {
+    bootstrap
+  } = config;
 
-      // Start Express
-      app.server.start(() => {
-
-        console.log(`Vulkano is running on port ${app.server.get('port')} in ${env} mode`);
-
-        if (!app.config.settings.connection) {
-          console.log('The value for config.settings.connection is empty. Skipping database connection.');
-        } else {
-          console.log(`Database Environment: ${app.config.settings.connection}`);
-        }
-
-        console.log(`Startup Time: ${moment(moment().diff(global.STARTTIME)).format('ss.SSS')} sec`);
-
-      });
-    });
-  } else {
+  if (!bootstrap || typeof bootstrap !== 'function') {
     console.log('Missing the boostrap file to start app: config/bootstrap.js');
+    return;
   }
+
+  bootstrap( (callbackAfterInitVulkano) => {
+
+    // Start Express
+    app.server.start( () => {
+
+      const {
+        database
+      } = app.config.settings || {};
+
+      const {
+        connection
+      } = database || {};
+
+      const serverConfig = [];
+
+      const nodeVersion = process.version.match(/^v(\d+\.\d+)/)[1];
+
+      const portText = app.server.get('port').padEnd(nodeVersion.length, ' ');
+      serverConfig.push(` PORT: ${colors.fg.green}${portText}${colors.reset}`);
+      serverConfig.push(' | ');
+      serverConfig.push(` ENV: ${app.PRODUCTION ? colors.fg.red : colors.fg.green}${env}${colors.reset}`);
+
+      console.log(serverConfig.join(''));
+
+      const nodeConfig = [];
+      nodeConfig.push(` NODE: ${colors.fg.green}${nodeVersion}${colors.reset}`);
+      nodeConfig.push(' | ');
+      nodeConfig.push(' STARTUP: ', `${colors.fg.green}${moment(moment().diff(global.START_TIME)).format('ss.SSS')} sec${colors.reset}`);
+      console.log(nodeConfig.join(''));
+
+      console.log(' DATABASE:', connection ? `${colors.fg.green}${connection}${colors.reset}` : `${colors.fg.blue}The connection is empty${colors.reset}`);
+
+      console.log(`${colors.fg.magenta}--------------------------------------`, colors.reset);
+
+      // Run custom callback after init vulkano
+      if (callbackAfterInitVulkano && typeof callbackAfterInitVulkano === 'function') {
+        callbackAfterInitVulkano();
+      }
+
+    });
+
+  });
 
 };

@@ -1,13 +1,15 @@
-/* global mongoose, app */
-
 /**
  * Database connection
  */
 
 const Promise = require('bluebird');
 const paginate = require('mongoose-paginate');
+const merge = require('deepmerge');
 
-global.mongoose = require('mongoose');
+const mongoose = require('mongoose');
+
+global.mongoose = mongoose;
+global.Virtual = 'Virtual';
 
 const AllModels = require('./models')();
 
@@ -25,28 +27,41 @@ module.exports = function loadDatabaseApplication() {
   } = config;
 
   const {
-    connection
+    database
   } = settings;
 
-  const toConnect = connections[connection];
+  const {
+    connection
+  } = database || {};
 
   if (!connection) {
     return;
   }
 
+  const toConnect = connections[connection];
+
   if (!toConnect) {
     throw `Invalid conection to user MongoDB with source ${connection}`;
   }
 
-  const connectionProps = {
-    useNewUrlParser: true
+  const defaultProps = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    family: 4
   };
+
+  const connectionProps = merge.all([
+    defaultProps,
+    (database ? database.config || {} : {})
+  ]);
 
   if (!mongoose.connection.readyState) {
     mongoose.connect(toConnect, connectionProps);
   }
 
   const db = mongoose.connection;
+
+  // Each Model
   Object.keys(AllModels).forEach((model) => {
 
     const current = AllModels[model];
@@ -56,27 +71,53 @@ module.exports = function loadDatabaseApplication() {
 
       // Allow trim all attributes
       const attributes = {};
+      const virtuals = {};
+
       Object.keys(current.attributes).forEach( (attr) => {
+
         const currentAttr = current.attributes[attr];
         const type = currentAttr.type || '';
+
         if ( type !== Boolean) {
           if (currentAttr.trim !== false) {
             currentAttr.trim = true;
           }
         }
-        attributes[attr] = currentAttr;
+
+        if ( String(type).toLowerCase() === 'virtual' ) {
+          virtuals[attr] = currentAttr;
+          delete attributes[attr];
+        } else {
+          attributes[attr] = currentAttr;
+        }
+
       });
 
+      if (!attributes.createdAt) {
+        attributes.createdAt = {
+          type: Date,
+          default: Date.now
+        };
+      }
+
       const schema = mongoose.Schema(attributes);
+
+      Object.keys(virtuals).forEach( (v) => {
+        schema.virtual(v, virtuals[v]);
+      });
+
+      schema.set('toObject', { virtuals: true });
+      schema.set('toJSON', { virtuals: true });
+
       delete current.attributes;
-      schema.statics = Object.assign({}, current);
+      schema.statics = { ...current };
       schema.plugin(paginate);
 
       // Indexes
       if (current.indexes !== undefined) {
         if (Array.isArray(current.indexes)) {
           const tmp = current.indexes;
-          Object.keys(tmp).forEach( index => schema.index(tmp[index]));
+          Object.keys(tmp).forEach( (index) => schema.index(tmp[index]));
         } else if (typeof current.indexes === 'object') {
           schema.index(current.indexes);
         }
@@ -86,7 +127,7 @@ module.exports = function loadDatabaseApplication() {
       if (current.plugins !== undefined) {
         if (Array.isArray(current.plugins)) {
           const tmp = current.plugins;
-          Object.keys(tmp).forEach( plugin => schema.plugin(tmp[plugin]));
+          Object.keys(tmp).forEach( (plugin) => schema.plugin(tmp[plugin]));
         } else if (typeof current.plugins === 'object') {
           schema.plugin(current.plugins);
         }

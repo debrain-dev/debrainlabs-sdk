@@ -24,7 +24,7 @@ setTimeout( () => {
 
 }, 100);
 
-function tracking(props) {
+export default (props) => {
 
   // eslint-disable-next-line camelcase
   const log_SessionID = window.sessionStorage.getItem('sdk-session-id');
@@ -56,6 +56,7 @@ function tracking(props) {
 
   const dataToSend = {
     log_URL: logUrl,
+    // eslint-disable-next-line camelcase
     log_SessionID,
     log_UTMSource: source,
     log_UTMCampaign: campaign,
@@ -82,6 +83,4 @@ function tracking(props) {
       console.log(`error msg: ${msg}`);
     });
 
-}
-
-export default tracking;
+};

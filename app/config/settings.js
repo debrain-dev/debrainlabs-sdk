@@ -1,5 +1,3 @@
-/* global __dirname */
-
 /**
  * Custom Server Config
  *
@@ -13,37 +11,40 @@
  * This config is merged with Express Config
  */
 
-const path = require('path');
-const moment = require('moment');
-
 module.exports = {
 
-  // Hostname
-  host: 'sdk.debrain.cloud', // @TODO: change for your domain
-
-  // Port
-  port: 5000,
-
-  // Upload path
-  uploadPath: 'public/files',
+  host: process.env.HOST || 'api.production.dev',
 
   // Connection to Database
-  connection: null,
+  database: {
 
-  // Custom Settings
-  config: {
-    'x-powered-by': false
+    // Connection key
+    connection: null,
+
+    // Additional config to mongoose
+    config: {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      // family: 4 // 4 (IPv4), 6 (IPv6), or null (default: OS family)
+      // useFindAndModify: false,
+      // useCreateIndex: true
+    }
+
   },
 
-  // Config Views
-  views: {
-    path: path.join(process.cwd(), 'app/views'),
-    engine: 'nunjucks', // or ejs
-    globals: [
-      {
-        moment: () => moment()
-      }
-    ]
+  // Express Settings
+  express: {
+
+    port: 8000,
+
+    uploadPath: 'public/files',
+
+    poweredBy: false,
+
+    helmet: {
+      crossOriginEmbedderPolicy: false
+    }
+
   }
 
 };

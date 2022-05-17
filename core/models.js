@@ -1,15 +1,10 @@
-/* global __dirname */
-
 /**
  * Models
  */
 
-const path = require('path');
-const _ = require('underscore');
-
 // Include all app models
 const AllModels = require('include-all')({
-  dirname: path.normalize(path.join(__dirname, '../app/models')),
+  dirname: `${APP_PATH}/models`,
   filter: /(.+)\.js$/,
   excludeDirs: /^\.(git|svn)$/,
   optional: true
@@ -49,6 +44,10 @@ const Callbacks = {
 
   afterValidate: () => {
 
+  },
+
+  beforeFindOneAndUpdate: (next) => {
+    next();
   }
 
 };
@@ -56,10 +55,19 @@ const Callbacks = {
 module.exports = function loadModelsApplication() {
 
   const models = {};
+
   Object.keys(AllModels).forEach((i) => {
+
     const current = AllModels[i];
-    models[i] = _({}).extend(Callbacks, ActiveRecord, current);
+
+    models[i] = {
+      ...Callbacks,
+      ...ActiveRecord,
+      ...current
+    };
+
   });
+
   return models;
 
 };

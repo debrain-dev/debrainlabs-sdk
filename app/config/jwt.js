@@ -1,6 +1,6 @@
 /**
- * JWT Config
  *
+ * JWT Config
  *
  */
 
@@ -10,7 +10,7 @@ module.exports = {
   // Enable JWT
   // @type Boolean
   //
-  enable: true,
+  enabled: true,
 
   //
   // Custom KEY
@@ -33,6 +33,13 @@ module.exports = {
   queryParameter: 'token',
 
   //
+  // Get token via cookie
+  // value: string
+  // @type String
+  //
+  cookieName: 'token',
+
+  //
   // Path to make mandatory the token
   // Example /api/
   // @type String
@@ -47,8 +54,7 @@ module.exports = {
   //
   ignore: [
     '/api/',
-    /^\/api\/auth/i,
-    /^\/api\/record/i
+    /^\/api\/auth/i
   ]
 
 };

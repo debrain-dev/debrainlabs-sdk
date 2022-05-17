@@ -1,6 +1,12 @@
+/**
+ * Alias Route Mappings
+ *
+ * Your routes map URLs to views and controllers.
+ */
+
 module.exports = {
 
-  '/': 'WebsiteController.get',
-  '/installation': 'WebsiteController.installation'
+  '/': 'HomeController.get',
+  '/installation': 'HomeController.installation'
 
 };

@@ -1,5 +1,5 @@
-@import "./fonts.scss";
-@import "./icons.scss";
+@import './scss/fonts.scss';
+@import './scss/icons.scss';
 
 $font-lato: 'Lato-Regular';
 $font-lato-light: 'Lato-Light';
@@ -16,10 +16,10 @@ $color-grey: #b0aa92;
 $color-brown: #927f50;
 
 // Foundation Core
-@import "./modules.scss";
+@import './scss/modules.scss';
 
 // normalize
-@import "./normalize.scss";
+@import './scss/normalize.scss';
 
 .sdk-main {
 
@@ -28,13 +28,13 @@ $color-brown: #927f50;
   }
 
   // Utility
-  @import "./utility.scss";
+  @import './scss/utility.scss';
 
   // Components
-  @import "./components/_index";
+  @import './scss/components/_index';
 
   // Pages
-  @import "./pages/_index";
+  @import "./scss/pages/_index";
 
 }
 

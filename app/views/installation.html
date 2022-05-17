@@ -1,4 +1,4 @@
-{% extends "_shared/templates/website.njk" %}
+{% extends "_shared/templates/default.html" %}
 
 {% block content %}
 
@@ -24,7 +24,7 @@
         <code class="javascript" style="font-size: 80%">
 &lt;script&gt;
   window.onSDKLoad = function() {
-    SDK.demo({
+    SDK.render({
       el: '.your-container'
     });
   };
@@ -77,7 +77,7 @@
     <div class="columns">
       <h3>Support</h3>
       <p>
-        For any support inquiries, please contact us at seth@hellodebrain.com.
+        For any support inquiries, please contact us at <a href="mailto:info@hellodebrain.com?subject=from https://sdk.domain.com/installation">info@hellodebrain.com</a>
       </p>
     </div>
   </div>

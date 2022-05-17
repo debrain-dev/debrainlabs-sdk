@@ -1,5 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
+const ESLintPlugin = require('eslint-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
+
 const baseConfig = require('./webpack.base');
 const pk = require('./package.json');
 
@@ -12,11 +15,25 @@ const pluginDefinePlugin = new webpack.DefinePlugin({
   'process.env.VERSION': JSON.stringify(version)
 });
 
-const plugins = [pluginDefinePlugin];
+// ESLint Options
+const pluginDefineESLint = new ESLintPlugin({
+  failOnWarning: false,
+  failOnError: false
+});
+
+// Define Plugin Vue
+const pluginDefineVue = new VueLoaderPlugin();
+
+const plugins = [
+  pluginDefinePlugin,
+  pluginDefineESLint,
+  pluginDefineVue
+];
 
 const config = Object.assign(baseConfig, {
   entry: {
-    sdk: './sdk/js/index.js'
+    sdk: './sdk/index.js',
+    main: './sdk/main.js',
   },
   output: {
     path: path.resolve(process.cwd(), './public/'),

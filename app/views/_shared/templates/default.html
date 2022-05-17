@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>DËBRAIN - SDK DEMO</title>
+    <meta charset=UTF-8 >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Niramit" rel="stylesheet">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#193e0f">
+
+    <link rel="stylesheet" href="/css/playground.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/languages/javascript.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+  </head>
+  <body>
+
+    <div id="app">{% block content %} {% endblock %}</div>
+
+    <script src="/js/sdk.js?v={{ app.pkg.version }}"></script>
+  </body>
+</html>

@@ -1,9 +1,9 @@
 // @TODO: change for your component name
-import demo from './demo/index';
+import render from './render/index';
 
 export default {
 
   // @TODO: change for your component name
-  demo
+  render
 
 };

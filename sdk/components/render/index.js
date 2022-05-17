@@ -2,7 +2,7 @@ import $SDK from 'jquery';
 
 import tplView from './templates/main.html';
 
-const demo = {
+export default {
 
   el: null,
 
@@ -58,6 +58,3 @@ const demo = {
   }
 
 };
-
-// @TODO: change for your component name
-export default demo;

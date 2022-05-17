@@ -1,11 +1,11 @@
 module.exports = {
 
   get(req, res) {
-    res.render('homepage.njk');
+    res.render('homepage.html');
   },
 
   installation(req, res) {
-    res.render('installation.njk');
+    res.render('installation.html');
   }
 
 };

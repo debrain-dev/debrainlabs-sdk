@@ -1,8 +1,8 @@
 // Foundation Core
-@import "./modules.scss";
+@import './scss/modules.scss';
 
 // Utility
-@import "./utility.scss";
+@import './scss/utility.scss';
 
 section.content{
   max-width: 1024px;
@@ -18,6 +18,9 @@ section, header, footer{
     max-width: rem-calc(1200);
     width: 100%;
     margin: 0 auto;
+  }
+  p, ul, li {
+    font-family: 'Lato-Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 }
 

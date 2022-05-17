@@ -1,29 +1,38 @@
 const gulpBase = require('./gulp.base');
 
-gulpBase({
+const port = process.env.PORT || 8000;
+
+// export tasks
+const tasks = gulpBase({
 
   server: {
-    proxy: 'localhost:5000'
+    proxy: `localhost:${port}`
   },
 
   scripts: {
     files: [
       'public/**/*.js',
-      'app/views/**/*.html'
+      'app/views/**/*.html',
+      'app/views/**/*.njk'
     ]
   },
 
   sass: {
     files: [
-      'sdk/scss/**/*.scss'
+      'sdk/**/*.scss'
     ],
     includePaths: [
       './',
       './node_modules/foundation-sites/scss',
       './node_modules/@mdi/font/scss',
-      './node_modules/swiper'
+      './node_modules/swiper',
+      './node_modules/aos/src/sass'
     ],
     output: './public/css'
   }
 
 });
+
+exports.build = tasks.build;
+exports.default = tasks.watch;
+exports.watch = tasks.watch;

@@ -1,4 +1,4 @@
-{% extends "_shared/templates/website.njk" %}
+{% extends "_shared/templates/default.html" %}
 
 {% block content %}
 
@@ -8,7 +8,7 @@
 
 <script type="text/javascript">
   window.onSDKLoad = function() {
-    SDK.demo({
+    SDK.render({
       el: '.playground'
     });
   };
